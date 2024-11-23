@@ -6,21 +6,21 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:45:26 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/21 17:49:12 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/23 17:15:11 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "ft_printf.h"
 
-void	ft_putstr(char *str);
-int	sp_type(va_list vlist, const char c);
-int	sp_s(va_list vlist);
-int	bs_esc(const char c);
-int	sp_d(va_list vlist);
+t_flags	init_flags(void);
+int	sp_load(va_list vlist, t_flags *flags);
+int	sp_flags(va_list vlist, const char **fptr);
+int	sp_type(const char c, t_flags *flags);
 
 int	ft_printf(const char *format, ...)
 {
@@ -38,7 +38,7 @@ int	ft_printf(const char *format, ...)
 		if (*fptr == '%')
 		{
 			fptr++;
-			count += sp_type(vlist, *fptr);
+			count += sp_flags(vlist, &fptr);
 			fptr++;
 		}
 		if (*fptr == '\\')
@@ -53,64 +53,62 @@ int	ft_printf(const char *format, ...)
 	return (count);
 }
 
-int	bs_esc(const char c)
+int	sp_flags(va_list vlist, const char **fptr)
 {
-	if (c == 'n')
+	const char	*tptr;
+	t_flags flags;
+
+	flags = init_flags();
+	tptr = *fptr;
+	while (*tptr)
 	{
-		write(1, "\n", 1);
-		return (1);
+		if (sp_type(*tptr, &flags))
+			break ;
+		tptr++;
 	}
-	if (c == 'r')
+	flags.buffer = ft_calloc((tptr - *fptr) + 2, sizeof(char));
+	if (!flags.buffer)
+		return (0);
+	ft_strlcpy(flags.buffer, *fptr, (tptr - *fptr) + 2);
+	*fptr = tptr + 1;
+	return (sp_load(vlist, &flags));
+	// while (*tptr == '-' || *tptr == '0' || *tptr == '.' ||
+	// 	   *tptr == '#' || *tptr == '+' || *tptr == ' ')
+	// {
+	// }
+}
+
+int	sp_load(va_list vlist, t_flags *flags)
+{
+
+}
+
+int	sp_type(const char c, t_flags *flags)
+{
+	if (c == 'c' || c == 's' || c == 'p' ||
+		c == 'd' || c == 'i' || c == 'u' ||
+		c == 'x' || c == 'X' || c == '%')
 	{
-		// do sumting
+		flags->specifier = c;
+		return (c);
 	}
 	return (0);
 }
 
-int	sp_type(va_list vlist, const char c)
+t_flags	init_flags(void)
 {
-	if (c == 's')
-	{
-		return (sp_s(vlist));
-	}
-	if (c == 'd')
-	{
-		return (sp_d(vlist));
-	}
-	return (0);
+	t_flags flags;
+
+	flags.left_align = 0;
+	flags.zero_pad = 0;
+	flags.hash_hex = 0;
+	flags.show_sign = 0;
+	flags.space = 0;
+	flags.width = 0;
+	flags.precision = -1;
+	flags.specifier = '\0';
+	return (flags);
 }
-
-int	sp_d(va_list vlist)
-{
-	int idx;
-
-	idx = va_arg(vlist, int);
-	ft_putnbr_fd(idx, 1);
-	return (ft_countdigits(idx));
-}
-
-int	sp_s(va_list vlist)
-{
-	char *str;
-
-	str = va_arg(vlist, char *);
-	if (str)
-	{
-		ft_putstr_fd(str, 1);
-		return (ft_strlen(str));
-	}
-	return (0);
-}
-
-void	ft_putstr(char *str)
-{
-	while (*str)
-	{
-		write(1, str, 1);
-		str++;
-	}
-}
-
 
 int main(void)
 {

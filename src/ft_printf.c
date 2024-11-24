@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:45:26 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/23 17:15:11 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/24 18:14:55 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 t_flags	init_flags(void);
 int	sp_load(va_list vlist, t_flags *flags);
 int	sp_flags(va_list vlist, const char **fptr);
-int	sp_type(const char c, t_flags *flags);
+int	sp_type(const char *c, t_flags *flags);
 
 int	ft_printf(const char *format, ...)
 {
@@ -55,22 +55,23 @@ int	ft_printf(const char *format, ...)
 
 int	sp_flags(va_list vlist, const char **fptr)
 {
-	const char	*tptr;
+	// const char	*tptr;
 	t_flags flags;
 
 	flags = init_flags();
-	tptr = *fptr;
-	while (*tptr)
-	{
-		if (sp_type(*tptr, &flags))
-			break ;
-		tptr++;
-	}
-	flags.buffer = ft_calloc((tptr - *fptr) + 2, sizeof(char));
-	if (!flags.buffer)
+	// tptr = *fptr;
+	// while (*tptr)
+	// {
+		// if (sp_type(*fptr, &flags))
+			// break ;
+	// 	tptr++;
+	// }
+	// flags.buffer = ft_substr(*fptr, 0, (tptr - *fptr) + 1);
+	// if (!flags.buffer)
+	// 	return (0);
+	// *fptr = tptr + 1;
+	if (!sp_type(*fptr, &flags))
 		return (0);
-	ft_strlcpy(flags.buffer, *fptr, (tptr - *fptr) + 2);
-	*fptr = tptr + 1;
 	return (sp_load(vlist, &flags));
 	// while (*tptr == '-' || *tptr == '0' || *tptr == '.' ||
 	// 	   *tptr == '#' || *tptr == '+' || *tptr == ' ')
@@ -80,17 +81,35 @@ int	sp_flags(va_list vlist, const char **fptr)
 
 int	sp_load(va_list vlist, t_flags *flags)
 {
-
+	if (flags->specifier == 'c')
+		return (sp_c(vlist, flags));
 }
 
-int	sp_type(const char c, t_flags *flags)
+int	sp_type(const char *c, t_flags *flags)
 {
-	if (c == 'c' || c == 's' || c == 'p' ||
-		c == 'd' || c == 'i' || c == 'u' ||
-		c == 'x' || c == 'X' || c == '%')
+	while (*c)
 	{
-		flags->specifier = c;
-		return (c);
+		if (*c == 'c' || *c == 's' || *c == 'p' || *c == 'd' || *c == 'i'
+			|| *c == 'u' || *c == 'x' || *c == 'X' || *c == '%')
+		{
+			flags->specifier = *c;
+			return (*c);
+		}
+		if (*c == '-')
+			flags->left_align = 1;
+		else if (*c == '0')
+			flags->zero_pad = 1;
+		else if (*c == ' ')
+			flags->space = 1;
+		else if (*c == '#')
+			flags->hash_hex = 1;
+		else if (*c == '+')
+			flags->show_sign = 1;
+		else if (*c++ == '.')
+			flags->precision = ft_atoi(c);
+		else if (!flags->precision)
+			flags->width = ft_atoi(++c);
+		c++;
 	}
 	return (0);
 }

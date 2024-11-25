@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:45:26 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/24 20:09:44 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/25 22:21:26 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@
 #include <unistd.h>
 #include "ft_printf.h"
 
-t_flags	init_flags(void);
-int	sp_load(va_list vlist, t_flags *flags);
-int	sp_flags(va_list vlist, const char **fptr);
-int	sp_type(const char *c, t_flags *flags);
-void	fl_set_precision(const char **c, t_flags *flags);
-void	fl_set_width(const char **c, t_flags *flags);
+// int	ft_sp_load(va_list vlist, t_flags *flags);
+int		sp_fl(const char **fptr);
+void	print_flags(t_flags *flags);
 
 int	ft_printf(const char *format, ...)
 {
@@ -39,15 +36,14 @@ int	ft_printf(const char *format, ...)
 		count++;
 		if (*fptr == '%')
 		{
-			fptr++;
-			count += sp_flags(vlist, &fptr);
+			count += sp_fl(&fptr);
 			fptr++;
 		}
 		if (*fptr == '\\')
 		{
-			fptr++;
-			count += bs_esc(*fptr);
-			fptr++;
+			// fptr++;
+			// count += bs_esc(*fptr);
+			// fptr++;
 		}
 		write(1, &*fptr, 1);
 		fptr++;
@@ -55,114 +51,48 @@ int	ft_printf(const char *format, ...)
 	return (count);
 }
 
-int	sp_flags(va_list vlist, const char **fptr)
+int	sp_fl(const char **fptr)
 {
 	// const char	*tptr;
 	t_flags flags;
 
-	flags = init_flags();
-	// tptr = *fptr;
-	// while (*tptr)
-	// {
-		// if (sp_type(*fptr, &flags))
-			// break ;
-	// 	tptr++;
-	// }
-	// flags.buffer = ft_substr(*fptr, 0, (tptr - *fptr) + 1);
-	// if (!flags.buffer)
-	// 	return (0);
-	// *fptr = tptr + 1;
-	if (!sp_type(*fptr, &flags))
+	flags = fl_init();
+	if (!fl_set(*fptr, &flags))
 		return (0);
-	return (sp_load(vlist, &flags));
-	// while (*tptr == '-' || *tptr == '0' || *tptr == '.' ||
-	// 	   *tptr == '#' || *tptr == '+' || *tptr == ' ')
-	// {
-	// }
-}
-
-int	sp_load(va_list vlist, t_flags *flags)
-{
-	if (flags->specifier == 'c')
-		return (sp_c(vlist, flags));
-}
-
-int	sp_type(const char *c, t_flags *flags)
-{
-	while (*c)
-	{
-		if (*c == 'c' || *c == 's' || *c == 'p' || *c == 'd' || *c == 'i'
-			|| *c == 'u' || *c == 'x' || *c == 'X' || *c == '%')
-		{
-			flags->specifier = *c;
-			return (*c);
-		}
-		if (*c == '-')
-			flags->left_align = 1;
-		else if (*c == '0' && flags->width == 0 && flags->precision == -1)
-			flags->zero_pad = 1;
-		else if (*c == ' ')
-			flags->space = 1;
-		else if (*c == '#')
-			flags->hash_hex = 1;
-		else if (*c == '+')
-			flags->show_sign = 1;
-		else if (*c == '.')
-			fl_set_precision(&c, flags);
-		else if (ft_isdigit(*c))
-			fl_set_width(&c, flags);
-		c++;
-	}
+	print_flags(&flags);
 	return (0);
+	// return (ft_sp_load(vlist, &flags));
 }
 
-void	fl_set_precision(const char **c, t_flags *flags)
+// int	ft_sp_load(va_list vlist, t_flags *flags)
+// {
+// 	if (flags->specifier == 'c')
+// 		return (sp_c(vlist, flags));
+// 	return (0);
+// }
+
+
+void print_flags(t_flags *flags)
 {
-	if (**c == '.')
-		(*c)++;
-	if (ft_isdigit(**c))
-	{
-		flags->precision = ft_atoi(*c);
-		while (ft_isdigit(**c))
-			(*c)++;
-	}
-	else
-		flags->precision = 0;
+    printf("Flags:\n");
+    printf("  left_align  : %d\n", flags->left_align);
+    printf("  zero_pad    : %d\n", flags->zero_pad);
+    printf("  hash_hex    : %d\n", flags->hash_hex);
+    printf("  show_sign   : %d\n", flags->show_sign);
+    printf("  space       : %d\n", flags->space);
+    printf("  width       : %d\n", flags->width);
+    printf("  precision   : %d\n", flags->precision);
+    printf("  specifier   : %c\n", flags->specifier ? flags->specifier : '-');
 }
-
-void	fl_set_width(const char **c, t_flags *flags)
-{
-	if (**c >= '1' && **c <= '9')
-	{
-		flags->width = ft_atoi(*c);
-		while (ft_isdigit(**c))
-			(*c)++;
-	}
-}
-
-t_flags	init_flags(void)
-{
-	t_flags flags;
-
-	flags.left_align = 0;
-	flags.zero_pad = 0;
-	flags.hash_hex = 0;
-	flags.show_sign = 0;
-	flags.space = 0;
-	flags.width = 0;
-	flags.precision = -1;
-	flags.specifier = '\0';
-	return (flags);
-}
-
-int main(void)
-{
-	char *str = "world";
-	int n = 123;
-
-	int i = ft_printf("hello [%s] and [%d].\n", str, n);
-	printf("%d", i);
-
-
-	return (0);
-}
+//
+// int main(void)
+// {
+// 	char *str = "world";
+// 	int n = 123;
+//
+// 	int i = ft_printf("hello [%s] and [%d].\n", str, n);
+// 	printf("%d", i);
+//
+//
+// 	return (0);
+// }

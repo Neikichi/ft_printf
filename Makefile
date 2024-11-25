@@ -4,36 +4,42 @@ SRC_DIR = src
 INC_DIR = include
 LIBFT_DIR = libft
 
-SRC = $(SRC_DIR)/*.c
-OBJ = $(SRC:.c=.o)
+SRC = $(wildcard $(SRC_DIR)/*.c)
+LIBFT_SRC = $(wildcard $(LIBFT_DIR)/*.c)
+OBJ = $(SRC:%.c=%.o)
+LIBFT_OBJ = $(LIBFT_SRC:%.c=%.o)
 
-CC = CC
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
-IFLAGS = -I$(INC_DIR) -I$(LIBFT_DIR)
+IFLAGS = -I$(INC_DIR) #-I$(LIBFT_DIR)
 AR = ar
 ARFLAGS = rcs
-LIBFT = $(LIBFT_DIR)/libft.a
+# LIBFT = $(LIBFT_DIR)/libft.a
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) bonus
-
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT_OBJ)
+	@echo "Creating library..."
 	@$(AR) $(ARFLAGS) $@ $^
+	@echo "Created $(NAME)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "Removing objects files..."
+	@rm -f $(OBJ) $(LIBFT_OBJ)
+	@echo "Objects files removed."
 
 fclean: clean
+	@echo "Removing $(NAME)..."
 	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "$(NAME) removed."
 
-re: fclean clean
-	@$(MAKE) -C $(LIBFT_DIR) re
+re: fclean all
 
-.PHONY all clean fclean re bonus
+debug: CFLAGS += -g
+debug: fclean all
+	@echo "Enable debug mode"
+
+.PHONY: all clean fclean re debug

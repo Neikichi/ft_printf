@@ -6,14 +6,14 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:44:16 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/24 17:23:45 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/25 22:17:51 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <__stdarg_va_list.h>
+#include <stdarg.h>
 typedef struct s_flags {
 	int		left_align; // store after the value
 	int		zero_pad; // store before the value
@@ -26,6 +26,16 @@ typedef struct s_flags {
 	char	*buffer;
 }	t_flags;
 
+int	ft_printf(const char *format, ...);
 int	sp_c(va_list vlist, t_flags *flags);
+
+//flags
+int		fl_set(const char *c, t_flags *flags);
+void	fl_set_precision(const char **c, t_flags *flags);
+void	fl_set_width(const char **c, t_flags *flags);
+t_flags	fl_init(void);
+
+// to add to libft
+int		ft_countdigits(long int n);
 
 #endif

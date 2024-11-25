@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 22:56:28 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/23 16:11:04 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/25 15:57:16 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 
 // own add
-int		ft_countdigits(long int n);
+// int		ft_countdigits(long int n);
 
 #endif

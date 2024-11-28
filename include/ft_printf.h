@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:44:16 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/25 22:17:51 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/28 19:55:04 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,25 @@ typedef struct s_flags {
 	char	*buffer;
 }	t_flags;
 
-int	ft_printf(const char *format, ...);
-int	sp_c(va_list vlist, t_flags *flags);
+int		ft_printf(const char *format, ...);
+int		bs_esc(const char *fptr);
 
 //flags
-int		fl_set(const char *c, t_flags *flags);
-void	fl_set_precision(const char **c, t_flags *flags);
-void	fl_set_width(const char **c, t_flags *flags);
+int		fl_set(const char **c, t_flags *flags);
 t_flags	fl_init(void);
+int		fl_load(va_list vlist, t_flags *flags);
 
 // to add to libft
 int		ft_countdigits(long int n);
+void	ft_putnstr_fd(char *s, int n, int fd);
+void	ft_putnchar_fd(char c, int n, int fd);
+int		ft_countdigits_u(unsigned long int n);
+char	*ft_itoa_u(unsigned long int n);
+char	*ft_itoa_hex(unsigned long int n);
+int		ft_countdigits_hex(unsigned long int n);
+int		ft_isupper(int c);
+int		ft_islower(int c);
+void	ft_strlowercase(char *str);
+void	ft_struppercase(char *str);
 
 #endif

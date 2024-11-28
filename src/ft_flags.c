@@ -6,43 +6,46 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:58:18 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/25 18:58:49 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/27 06:14:36 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
 
-int	fl_set(const char *c, t_flags *flags)
+static void	fl_set_precision(const char **c, t_flags *flags);
+static void	fl_set_width(const char **c, t_flags *flags);
+
+int	fl_set(const char **c, t_flags *flags)
 {
-	while (*(++c))
+	while (*++(*c))
 	{
-		if (*c == 'c' || *c == 's' || *c == 'p' || *c == 'd' || *c == 'i'
-			|| *c == 'u' || *c == 'x' || *c == 'X' || *c == '%')
+		if (**c == 'c' || **c == 's' || **c == 'p' || **c == 'd' || **c == 'i'
+			|| **c == 'u' || **c == 'x' || **c == 'X' || **c == '%')
 		{
-			flags->specifier = *c;
-			return (*c);
+			flags->specifier = **c;
+			return (**c);
 		}
-		if (*c == '-')
+		if (**c == '-')
 			flags->left_align = 1;
-		else if (*c == '0' && !flags->width && flags->precision == -1
+		else if (**c == '0' && !flags->width && flags->precision == -1
 			&& !flags->left_align)
 			flags->zero_pad = 1;
-		else if (*c == ' ')
+		else if (**c == ' ')
 			flags->space = 1;
-		else if (*c == '#')
+		else if (**c == '#')
 			flags->hash_hex = 1;
-		else if (*c == '+')
+		else if (**c == '+')
 			flags->show_sign = 1;
-		else if (*c == '.')
-			fl_set_precision(&c, flags);
-		else if (ft_isdigit(*c))
-			fl_set_width(&c, flags);
+		else if (**c == '.')
+			fl_set_precision(c, flags);
+		else if (ft_isdigit(**c))
+			fl_set_width(c, flags);
 	}
 	return (0);
 }
 
-void	fl_set_precision(const char **c, t_flags *flags)
+static void	fl_set_precision(const char **c, t_flags *flags)
 {
 	if (**c == '.')
 		(*c)++;
@@ -57,7 +60,7 @@ void	fl_set_precision(const char **c, t_flags *flags)
 		flags->precision = 0;
 }
 
-void	fl_set_width(const char **c, t_flags *flags)
+static void	fl_set_width(const char **c, t_flags *flags)
 {
 	if (**c >= '1' && **c <= '9')
 	{

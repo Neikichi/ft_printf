@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_countdigits.c                                   :+:      :+:    :+:   */
+/*   ft_struppercase.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 17:35:14 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/28 05:10:56 by vlow             ###   ########.fr       */
+/*   Created: 2024/11/28 16:37:08 by vlow              #+#    #+#             */
+/*   Updated: 2024/11/28 16:47:49 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/// Does not count sign symbols.
-int	ft_countdigits(long int n)
-{
-	int	count;
+#include "libft.h"
+#include "ft_printf.h"
 
-	count = 0;
-	if (n == 0)
-		return (1);
-	while (n != 0)
+void	ft_struppercase(char *str)
+{
+	if (!str)
+		return ;
+	while (*str)
 	{
-		n /= 10;
-		count++;
+		if (ft_islower(*str))
+			*str = ft_toupper((unsigned char)*str);
+		str++;
 	}
-	return (count);
 }

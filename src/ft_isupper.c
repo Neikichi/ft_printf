@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_countdigits.c                                   :+:      :+:    :+:   */
+/*   ft_isupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 17:35:14 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/28 05:10:56 by vlow             ###   ########.fr       */
+/*   Created: 2024/11/28 16:37:46 by vlow              #+#    #+#             */
+/*   Updated: 2024/11/28 16:37:56 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/// Does not count sign symbols.
-int	ft_countdigits(long int n)
+int	ft_isupper(int c)
 {
-	int	count;
-
-	count = 0;
-	if (n == 0)
+	if (c >= 'A' && c <= 'Z')
 		return (1);
-	while (n != 0)
-	{
-		n /= 10;
-		count++;
-	}
-	return (count);
+	return (0);
 }

@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_countdigits.c                                   :+:      :+:    :+:   */
+/*   ft_countdigits_u.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 17:35:14 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/28 05:10:56 by vlow             ###   ########.fr       */
+/*   Created: 2024/11/28 13:22:33 by vlow              #+#    #+#             */
+/*   Updated: 2024/11/28 13:23:21 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/// For unsigned Version.
 /// Does not count sign symbols.
-int	ft_countdigits(long int n)
+int	ft_countdigits_u(unsigned long int n)
 {
 	int	count;
 

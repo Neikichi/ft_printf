@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:45:26 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/25 22:21:26 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/29 01:07:21 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "ft_printf.h"
 
 // int	ft_sp_load(va_list vlist, t_flags *flags);
-int		sp_fl(const char **fptr);
+int		sp_fl(va_list vlist, const char **fptr);
 void	print_flags(t_flags *flags);
 
 int	ft_printf(const char *format, ...)
@@ -36,41 +36,36 @@ int	ft_printf(const char *format, ...)
 		count++;
 		if (*fptr == '%')
 		{
-			count += sp_fl(&fptr);
+			count += sp_fl(vlist, &fptr);
 			fptr++;
 		}
 		if (*fptr == '\\')
 		{
-			// fptr++;
-			// count += bs_esc(*fptr);
-			// fptr++;
+			count += bs_esc(fptr);
+			fptr++;
 		}
 		write(1, &*fptr, 1);
 		fptr++;
 	}
+	va_end(vlist);
 	return (count);
 }
 
-int	sp_fl(const char **fptr)
+int	sp_fl(va_list vlist, const char **fptr)
 {
-	// const char	*tptr;
 	t_flags flags;
 
 	flags = fl_init();
-	if (!fl_set(*fptr, &flags))
+	if (!fl_set(fptr, &flags))
 		return (0);
-	print_flags(&flags);
-	return (0);
-	// return (ft_sp_load(vlist, &flags));
+	// print_flags(&flags);
+	if (flags.specifier == '%')
+	{
+		ft_putchar_fd('%', 1);
+		return (1);
+	}
+	return (fl_load(vlist, &flags));
 }
-
-// int	ft_sp_load(va_list vlist, t_flags *flags)
-// {
-// 	if (flags->specifier == 'c')
-// 		return (sp_c(vlist, flags));
-// 	return (0);
-// }
-
 
 void print_flags(t_flags *flags)
 {

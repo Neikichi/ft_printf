@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:58:18 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/27 06:14:36 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/30 20:18:33 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 
 static void	fl_set_precision(const char **c, t_flags *flags);
 static void	fl_set_width(const char **c, t_flags *flags);
+
+int	fl_load(va_list vlist, t_flags *flags)
+{
+	if (flags->specifier == 'c')
+		return (fl_sp_c(vlist, flags));
+	else if (flags->specifier == 's')
+		return (fl_sp_s(vlist, flags));
+	else if (flags->specifier == 'd' || flags->specifier == 'i')
+		return (fl_sp_di(vlist, flags));
+	else if (flags->specifier == 'u')
+		return (fl_sp_u(vlist, flags));
+	else if (flags->specifier == 'x' || flags->specifier == 'X')
+		return (fl_sp_x(vlist, flags));
+	else if (flags->specifier == 'p')
+		return (fl_sp_p(vlist, flags));
+	return (0);
+}
 
 int	fl_set(const char **c, t_flags *flags)
 {
@@ -57,7 +74,10 @@ static void	fl_set_precision(const char **c, t_flags *flags)
 		(*c)--;
 	}
 	else
+	{
 		flags->precision = 0;
+		(*c)--;
+	}
 }
 
 static void	fl_set_width(const char **c, t_flags *flags)

@@ -17,9 +17,9 @@ int main(void)
     ret_custom = ft_printf("Custom:   '%s'\n", str);
     printf("Return: %d\n", ret_custom);
 
-    ret_original = printf("Original: '%s'\n", empty_str);
+    ret_original = printf("Original: '%s '\n", "");
     printf("Return: %d\n", ret_original);
-    ret_custom = ft_printf("Custom:   '%s'\n", empty_str);
+    ret_custom = ft_printf("Custom:   '%s '\n", "");
     printf("Return: %d\n", ret_custom);
 
     ret_original = printf("Original: '%s'\n", null_str);
@@ -96,6 +96,23 @@ int main(void)
     ret_original = printf("Original: '%-20.5s'\n", null_str);
     printf("Return: %d\n", ret_original);
     ret_custom = ft_printf("Custom:   '%-20.5s'\n", null_str);
+    printf("Return: %d\n", ret_custom);
+
+	// Tester check
+    printf("\nTester check:\n");
+    ret_original = printf("Original: 'aa%.s'\n", "");
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   'aa%.s'\n", "");
+    printf("Return: %d\n", ret_custom);
+
+    ret_original = printf("Original: '%.s '\n", "");
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%.s '\n", "");
+    printf("Return: %d\n", ret_custom);
+
+    ret_original = printf("Original: '%.s'\n", "-");
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%.s'\n", "-");
     printf("Return: %d\n", ret_custom);
 
     return 0;

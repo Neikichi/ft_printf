@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:30:12 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/28 13:38:05 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/30 11:41:22 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 char	*ft_itoa_u(unsigned long int n)
 {
 	unsigned long int		size;
-	char	*buffer;
+	char					*buffer;
 
 	if (n == 0)
 		return (ft_strdup("0"));

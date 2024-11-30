@@ -59,6 +59,18 @@ int main(void)
     ret_custom = ft_printf("Custom:   '%10c'\n", c);
     printf("Return: %d\n", ret_custom);
 
+	// Tester cases
+    printf("\nTester cases:\n");
+    ret_original = printf("aa%c", '0');
+    printf("\nReturn: %d\n", ret_original);
+    ret_custom = ft_printf("aa%c", '0');
+    printf("\nReturn: %d\n", ret_custom);
+
+    ret_original = printf("Original: '%c'\n", '0' - 256);
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%c'\n", '0' - 256);
+    printf("Return: %d\n", ret_custom);
+
     return 0;
 }
 

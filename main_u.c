@@ -69,9 +69,9 @@ int main(void)
     ret_custom = ft_printf("Custom:   '%05u'\n", 42);
     printf("Return: %d\n", ret_custom);
 
-    // ret_original = printf("Original: '%0.5u'\n", 42);
-    // printf("Return: %d\n", ret_original);
-    ret_custom = ft_printf("Custom:   '%0.5u'\n", 42);
+    ret_original = printf("Original: '%07.5u'\n", 423211);
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%07.5u'\n", 423211);
     printf("Return: %d\n", ret_custom);
 
     // Edge Cases

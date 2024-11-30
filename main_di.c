@@ -117,18 +117,18 @@ int main(void)
     ret_custom = ft_printf("Custom:   '%5.8d'\n", 42);
     printf("Return: %d\n", ret_custom);
 
-    // ret_original = printf("Original: '%-05d'\n", 42);
-    // printf("Return: %d\n", ret_original);
+    ret_original = printf("Original: '%-05d'\n", 42);
+    printf("Return: %d\n", ret_original);
     ret_custom = ft_printf("Custom:   '%-05d'\n", 42);
     printf("Return: %d\n", ret_custom);
 
-    // ret_original = printf("Original: '%+ d'\n", 42);
-    // printf("Return: %d\n", ret_original);
+    ret_original = printf("Original: '%+ d'\n", 42);
+    printf("Return: %d\n", ret_original);
     ret_custom = ft_printf("Custom:   '%+ d'\n", 42);
     printf("Return: %d\n", ret_custom);
 
-    // ret_original = printf("Original: '%010.5d'\n", 42);
-    // printf("Return: %d\n", ret_original);
+    ret_original = printf("Original: '%010.5d'\n", 42);
+    printf("Return: %d\n", ret_original);
     ret_custom = ft_printf("Custom:   '%010.5d'\n", 42);
     printf("Return: %d\n", ret_custom);
 

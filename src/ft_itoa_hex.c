@@ -6,7 +6,7 @@
 /*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:20:37 by vlow              #+#    #+#             */
-/*   Updated: 2024/11/28 16:34:53 by vlow             ###   ########.fr       */
+/*   Updated: 2024/11/30 11:42:27 by vlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 char	*ft_itoa_hex(unsigned long int n)
 {
 	unsigned long int		size;
-	char	*buffer;
-	char *base;
+	char					*buffer;
+	char					*base;
 
 	base = "0123456789abcdef";
 	if (n == 0)
@@ -44,4 +44,3 @@ char	*ft_itoa_hex(unsigned long int n)
 	}
 	return (buffer);
 }
-

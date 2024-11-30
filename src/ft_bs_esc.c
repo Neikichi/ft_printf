@@ -1,5 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_bs_esc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlow <vlow@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/30 11:42:55 by vlow              #+#    #+#             */
+/*   Updated: 2024/11/30 18:01:36 by vlow             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_printf.h"
+
+static int	bs_helper1(const char *fptr);
 
 int	bs_esc(const char *fptr)
 {
@@ -26,10 +40,13 @@ int	bs_esc(const char *fptr)
 	else if (*fptr == '?')
 		ft_putchar_fd('?', 1);
 	else
-	{
-		ft_putchar_fd('\\', 1);
-		ft_putchar_fd(*fptr, 1);
-		return (2);
-	}
+		return (bs_helper1(fptr));
 	return (1);
+}
+
+static int	bs_helper1(const char *fptr)
+{
+	ft_putchar_fd('\\', 1);
+	ft_putchar_fd(*fptr, 1);
+	return (2);
 }

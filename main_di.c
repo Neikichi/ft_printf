@@ -127,10 +127,29 @@ int main(void)
     ret_custom = ft_printf("Custom:   '%+ d'\n", 42);
     printf("Return: %d\n", ret_custom);
 
-    ret_original = printf("Original: '%010.5d'\n", 42);
+	//tester case
+    printf("\nTester edge cases:\n");
+
+    ret_original = printf("Original: '%.11d'\n", INT_MIN);
     printf("Return: %d\n", ret_original);
-    ret_custom = ft_printf("Custom:   '%010.5d'\n", 42);
+    ret_custom = ft_printf("Custom:   '%.11d'\n", INT_MIN);
     printf("Return: %d\n", ret_custom);
+
+    ret_original = printf("Original: '%.12d'\n", INT_MIN);
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%.12d'\n", INT_MIN);
+    printf("Return: %d\n", ret_custom);
+
+    ret_original = printf("Original: '%.13d'\n", INT_MIN);
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%.13d'\n", INT_MIN);
+    printf("Return: %d\n", ret_custom);
+
+    ret_original = printf("Original: '%.14d'\n", INT_MIN);
+    printf("Return: %d\n", ret_original);
+    ret_custom = ft_printf("Custom:   '%.14d'\n", INT_MIN);
+    printf("Return: %d\n", ret_custom);
+
 
     return 0;
 }

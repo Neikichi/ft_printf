@@ -22,7 +22,7 @@ m1/ft_printf/
 │   ├── ft_flags_x.c     # Handler for %x / %X
 │   └── ft_bs_esc.c      # Backslash / escape character handler
 ├── libft/               # Bundled libft dependency
-├── Makefile
+├── Makefile             # Build system — no CMake or external tools required
 └── main*.c              # Manual test files per specifier
 ```
 
